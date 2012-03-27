@@ -2,11 +2,11 @@
 
 namespace Versionable\Ration\Connection;
 
-class Stream implements ConnectionInterface
+class Stream extends Connection implements ConnectionInterface
 {
-    public function __construct($connectionString)
+    public function __construct()
     {
-        
+        throw new \Exception('Stream connection not implemented');
     }
     
     public function connect()
@@ -18,8 +18,8 @@ class Stream implements ConnectionInterface
     {
         
     }
-    
-    public function isConnected()
+
+    public function readLength($length = 1024)
     {
         
     }
@@ -29,12 +29,7 @@ class Stream implements ConnectionInterface
         
     }
     
-    public function write()
-    {
-        
-    }
-    
-    public function execute()
+    public function write($command)
     {
         
     }

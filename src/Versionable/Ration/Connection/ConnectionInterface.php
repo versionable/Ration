@@ -10,7 +10,11 @@ interface ConnectionInterface
     
     public function disconnect();
     
-    public function auth($password);
+    public function readLength($length = 1024);
+    
+    public function read();
+    
+    public function write($command);
     
     public function send(CommandInterface $command);
 }

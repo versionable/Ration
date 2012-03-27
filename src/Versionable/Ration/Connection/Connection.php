@@ -5,8 +5,31 @@ namespace Versionable\Ration\Connection;
 use Versionable\Ration\Exception\InvalidResponseException;
 use Versionable\Ration\Exception\ResponseException;
 
+use Versionable\Ration\Command\CommandInterface;
+
 abstract class Connection
-{    
+{
+    /**
+     * @param CommandInterface $command
+     * @return mixed
+     */
+    public function send(CommandInterface $command)
+    {
+        $this->connect();
+        
+        $this->write($command->build());
+        
+        $response = $this->read();
+        
+        return $this->parseResponse($response);
+    }
+    
+    /**
+     * @param string $raw
+     * @return mixed
+     * @throws ResponseException
+     * @throws InvalidResponseException 
+     */
     protected function parseResponse($raw)
     {
         $raw = trim($raw);
@@ -47,7 +70,7 @@ abstract class Connection
                     } while ($read < $size);
                 }
                 
-                $this->discard(2);
+                $this->readLength(2);
                 break;
             case '*':
                 $count = intval(substr($raw, 1));
