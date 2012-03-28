@@ -7,6 +7,14 @@ use Versionable\Ration\Command;
 
 use Versionable\Ration\Exception\CommandException;
 
+/**
+ * @method void set(string $key, string $value) Sets a value in redis
+ * @method string get(string $key) Gets a value from redis
+ * @method bool delete(string $key) Deletes a value from redis
+ * @method bool exists(string $key) Checks if a key exists in redis
+ * @method bool timeToLive(string $key) Returns the time to live of a key
+ * @method void clean() Deletes all keys from all databases
+ */
 class Client
 {
     /**
