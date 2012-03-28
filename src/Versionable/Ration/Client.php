@@ -14,6 +14,7 @@ use Versionable\Ration\Exception\CommandException;
  * @method bool exists(string $key) Checks if a key exists in redis
  * @method bool timeToLive(string $key) Returns the time to live of a key
  * @method void clean() Deletes all keys from all databases
+ * @method string ping() Pings the redis server
  */
 class Client
 {
