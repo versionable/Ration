@@ -7,7 +7,7 @@ use Versionable\Ration\Exception\ResponseException;
 
 use Versionable\Ration\Command\CommandInterface;
 
-abstract class Connection
+abstract class Connection implements ConnectionInterface
 {
     /**
      * @param CommandInterface $command
@@ -48,12 +48,14 @@ abstract class Connection
                 
                 break;
             case '$':
+                $raw = substr($raw, 1);
+
                 if ($raw == '-1') {
                     break;
                 }
                 
                 $read = 0;
-                $size = intval(substr($raw, 1));
+                $size = intval($raw);
                 
                 if ($size > 0) {
                     do {
@@ -82,7 +84,7 @@ abstract class Connection
                 $response = array();
                 
                 for ($i = 0; $i < $count; $i++) {
-                    $response[] = $this->read();
+                    $response[] = $this->parseResponse($this->read());
                 }
                 break;
             case ':':
