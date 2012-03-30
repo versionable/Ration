@@ -15,6 +15,9 @@ use Versionable\Ration\Exception\CommandException;
  * @method bool timeToLive(string $key) Returns the time to live of a key
  * @method void clean() Deletes all keys from all databases
  * @method string ping() Pings the redis server
+ * @method void multi() declares following statements as atomic
+ * @method string exec returns a string reply as to whether a cas succeeded or not
+ * @method void watch(string $key) declares that the value of a key should be watched (cas transaction)
  */
 class Client
 {
@@ -53,7 +56,17 @@ class Client
     {
         $this->_connection = $connection;
     }
-  
+
+    /**
+     * This function gets the connection
+     *
+     * @return Connection\ConnectionInterface
+     */
+    protected function getConnection()
+    {
+        return $this->_connection;
+    }
+
     /**
      * @param string $name
      * @param array $args
@@ -63,14 +76,14 @@ class Client
     public function __call($name, $args)
     {
         $className = sprintf('Versionable\Ration\Command\%s', ucwords(strtolower($name)));
-        
+
         if (false === class_exists($className)) {
             throw new CommandException(sprintf('Unknown command "%s"', $name));
         }
         
         $command = new $className($args);
         
-        return $this->_connection->send($command);
+        return $this->getConnection()->send($command);
     }
     
     /**
@@ -89,13 +102,14 @@ class Client
      */
     public function flush()
     {
+        $conn = $this->getConnection();
         foreach ($this->queue as $command) {
-            $this->_connect->write($command);
+            $conn->write($command);
         }
         
         $response = array();
         for ($i = 0; $i < count($this->queue); $i++) {
-            $response[] = $this->_connection()->read();
+            $response[] = $conn->read();
         }
         
         if (count($this->queue) == 1) {
