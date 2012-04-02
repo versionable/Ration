@@ -18,6 +18,7 @@ use Versionable\Ration\Exception\CommandException;
  * @method void multi() declares following statements as atomic
  * @method string exec returns a string reply as to whether a cas succeeded or not
  * @method void watch(string $key) declares that the value of a key should be watched (cas transaction)
+ * @method array|string keys(string $prefix) returns all keys matching a prefix
  */
 class Client
 {
