@@ -43,7 +43,7 @@ class Client
     public function __construct(ConnectionInterface $connection = null)
     {
         if (null !== $connection) {
-            $this->setConnection($connection);
+            $this->_connection = $connection;
         }
         
         $this->queue = array();
