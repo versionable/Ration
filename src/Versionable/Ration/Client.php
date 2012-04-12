@@ -13,7 +13,7 @@ use Versionable\Ration\Exception\CommandException;
  * @method bool delete(string $key) Deletes a value from redis
  * @method bool exists(string $key) Checks if a key exists in redis
  * @method bool timeToLive(string $key) Returns the time to live of a key
- * @method void clean() Deletes all keys from all databases
+ * @method void flushAll() Deletes all keys from all databases
  * @method string ping() Pings the redis server
  * @method void multi() declares following statements as atomic
  * @method string exec returns a string reply as to whether a cas succeeded or not

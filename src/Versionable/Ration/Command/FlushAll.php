@@ -2,7 +2,7 @@
 
 namespace Versionable\Ration\Command;
 
-class Clean extends Command implements CommandInterface
+class FlushAll extends Command implements CommandInterface
 {
     const COMMAND = 'FLUSHALL';
 
