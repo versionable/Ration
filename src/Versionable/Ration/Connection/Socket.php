@@ -1,6 +1,8 @@
 <?php
 
 namespace Versionable\Ration\Connection;
+use Versionable\Ration\Exception\ConnectionException;
+use Versionable\Ration\Exception\CommandException;
 
 class Socket extends Connection implements ConnectionInterface
 {
