@@ -2,15 +2,15 @@
 
 namespace Versionable\Ration\Command;
 
-class Exec extends Command implements CommandInterface
+class Exec implements CommandInterface
 {
-    const COMMAND = 'EXEC';
-
-    /**
-     * @param array $args
-     */
-    public function __construct(array $args = array())
+    public function getCommand()
     {
-        $this->args = $args;
+        return 'exec';
+    }
+    
+    public function getParameters()
+    {
+        return array();
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Versionable\Ration\Connection;
 
-use Versionable\Ration\Command\CommandInterface;
+use Versionable\Ration\Request\Request;
 
 interface ConnectionInterface
 {
-    public function connect();
+    public function initialize();
     
     public function disconnect();
     
@@ -16,5 +16,7 @@ interface ConnectionInterface
     
     public function write($command);
     
-    public function send(CommandInterface $command);
+    public function call(Request $request);
+    
+    public function parseResponse($raw);
 }

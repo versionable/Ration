@@ -1,6 +1,6 @@
 <?php
 
-namespace Versionable\Ration\Exception;
+namespace Versionable\Ration\Command\Exception;
 
 class CommandException extends \RuntimeException
 { }

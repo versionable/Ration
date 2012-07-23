@@ -2,20 +2,18 @@
 
 namespace Versionable\Ration\Connection;
 
-use Versionable\Ration\Exception\ConnectionException;
-use Versionable\Ration\Exception\CommandException;
+use Versionable\Ration\Connection\Exception\ConnectionException;
+use Versionable\Ration\Command\Exception\CommandException;
+use Versionable\Ration\Request\Request;
+use Versionable\Ration\Response\Response;
 
-class TCP extends Socket
+class TCP extends Connection
 {
-    /**
-     * @var string
-     */
-    private $_host;
+    protected $handle;
     
-    /**
-     * @var integer
-     */
-    private $_port;
+    protected $host;
+    
+    protected $port;
     
     /**
      * @param string $host
@@ -23,21 +21,80 @@ class TCP extends Socket
      */
     public function __construct($host = 'localhost', $port = 6379)
     {
-        $this->_host = $host;
-        $this->_port = $port;
+        $this->host = $host;
+        $this->port = $port;
+    }
+    
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    public function setHost($host)
+    {
+        $this->host = $host;
+    }
+
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    public function setPort($port)
+    {
+        $this->port = $port;
     }
     
     /**
      * @throws ConnectionException 
      */
-    public function connect()
+    public function initialize()
     {
-        if (null === $this->_socket) {
-            $this->_socket = @fsockopen($this->_host, $this->_port, $errono, $errstr);
+        if (null === $this->handle) {
+            $this->handle = @fsockopen($this->getHost(), $this->getPort(), $errono, $errstr);
 
-            if (false === $this->_socket) {
-                throw new ConnectionException();
+            if (false === $this->handle) {
+                throw new ConnectionException($errstr);
             }
+        }
+    }
+    
+    public function call(Request $request)
+    {
+        $this->initialize();
+        
+        $commandString = $request->buildRequest();
+        
+        $this->write($commandString);
+        
+        $raw = $this->read();
+        
+        $response = $this->parseResponse($raw);
+        
+        return $response;
+    }
+
+    public function disconnect()
+    {
+        fclose($this->handle);
+    }
+
+    public function read()
+    {
+        return trim(fgets($this->handle), 512);
+    }
+
+    public function readLength($length = 1024)
+    {
+        return fread($this->handle, $length);
+    }
+
+    public function write($command)
+    {
+        $writeStatus = fwrite($this->handle, $command);
+        
+        if (null === $writeStatus) {
+            throw new CommandException();
         }
     }
 }

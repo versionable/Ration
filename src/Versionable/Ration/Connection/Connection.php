@@ -2,35 +2,21 @@
 
 namespace Versionable\Ration\Connection;
 
-use Versionable\Ration\Exception\InvalidResponseException;
-use Versionable\Ration\Exception\ResponseException;
-
-use Versionable\Ration\Command\CommandInterface;
+use Versionable\Ration\Response\Exception\InvalidResponseException;
+use Versionable\Ration\Response\Exception\ResponseException;
+use Versionable\Ration\Response\Response;
 
 abstract class Connection implements ConnectionInterface
 {
     /**
-     * @param CommandInterface $command
-     * @return mixed
-     */
-    public function send(CommandInterface $command)
-    {
-        $this->connect();
-        
-        $this->write($command->build());
-        
-        $response = $this->read();
-        
-        return $this->parseResponse($response);
-    }
-    
-    /**
      * @param string $raw
+     * 
      * @return mixed
+     * 
      * @throws ResponseException
      * @throws InvalidResponseException 
      */
-    protected function parseResponse($raw)
+    public function parseResponse($raw)
     {
         $raw = trim($raw);
         
@@ -38,14 +24,6 @@ abstract class Connection implements ConnectionInterface
         switch (substr($raw, 0, 1)) {
             case '-':
                 throw new ResponseException(substr($raw, 4));
-                break;
-            case '+':
-                $response = substr($raw, 1);
-                
-                if ($response === 'OK') {
-                    $response = true;
-                }
-                
                 break;
             case '$':
                 $raw = substr($raw, 1);
@@ -87,11 +65,9 @@ abstract class Connection implements ConnectionInterface
                     $response[] = $this->parseResponse($this->read());
                 }
                 break;
-            case ':':
-                $response = intval(substr($raw, 1));
-                break;
             default:
-                throw new InvalidResponseException($raw);
+                $response = new Response();
+                $response->parse($raw);
         }
         
         return $response;

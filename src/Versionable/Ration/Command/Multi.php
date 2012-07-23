@@ -2,15 +2,15 @@
 
 namespace Versionable\Ration\Command;
 
-class Multi extends Command implements CommandInterface
+class Multi implements CommandInterface
 {
-    const COMMAND = 'MULTI';
-
-    /**
-     * @param array $args
-     */
-    public function __construct(array $args = array())
+    public function getCommand()
     {
-        $this->args = $args;
+        return 'multi';
+    }
+    
+    public function getParameters()
+    {
+        return array();
     }
 }

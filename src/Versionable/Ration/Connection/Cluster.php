@@ -3,6 +3,7 @@
 namespace Versionable\Ration\Connection;
 
 use Versionable\Ration\Command\CommandInterface;
+use Versionable\Ration\Request\Request;
 
 class Cluster extends \SplObjectStorage implements ConnectionInterface
 {
@@ -43,9 +44,22 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
         return $this->current();
     }
     
-    public function connect()
+    public function initialize()
     {
         $this->rewind();
+        
+        foreach ($this as $connection) {
+            $connection->initialize();
+        }
+    }
+    
+    public function call(Request $request)
+    {
+        $this->initialize();
+        
+        $this->_lastConnection = $this->getConnection();
+        
+        return $this->_lastConnection->call($request);
     }
     
     public function disconnect()
@@ -84,15 +98,9 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
         $this->_lastConnection->write($command);
     }
     
-    /**
-     * @param CommandInterface $command
-     * @return mixed
-     */
-    public function send(CommandInterface $command)
+    public function parseResponse($raw)
     {
-        $this->_lastConnection = $this->getConnection();
-        
-        return $this->_lastConnection->send($command);
+        return $this->_lastConnection->parseResponse($raw);
     }
     
     public function __shutdown()

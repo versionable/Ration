@@ -2,15 +2,32 @@
 
 namespace Versionable\Ration\Command;
 
-class Get extends Command implements CommandInterface
+class Get implements CommandInterface
 {
-    const COMMAND = 'GET';
+    protected $key;
     
-    /**
-     * @param array $args 
-     */
-    public function __construct(array $args = array())
+    public function __construct($key)
     {
-        $this->args = $args;
+        $this->key = $key;
+    }
+    
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+    
+    public function getCommand()
+    {
+        return 'get';
+    }
+    
+    public function getParameters()
+    {
+        return array($this->getKey());
     }
 }

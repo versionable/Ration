@@ -2,7 +2,15 @@
 
 namespace Versionable\Ration\Command;
 
-class Ping extends Command implements CommandInterface
+class Ping implements CommandInterface
 {
-    const COMMAND = 'PING';
+    public function getCommand()
+    {
+        return 'ping';
+    }
+    
+    public function getParameters()
+    {
+        return array();
+    }
 }
