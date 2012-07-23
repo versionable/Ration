@@ -11,22 +11,22 @@ class Socket extends Connection implements ConnectionInterface
      * @var string
      */
     protected $path;
-    
+
     /**
      * @var resource
      */
     protected $handle;
-    
+
     /**
-     * @param string $path 
+     * @param string $path
      */
     public function __construct($path = '')
     {
         $this->path = $path;
     }
-    
+
     /**
-     * @throws ConnectionException 
+     * @throws ConnectionException
      */
     public function initialize()
     {
@@ -38,36 +38,36 @@ class Socket extends Connection implements ConnectionInterface
             }
         }
     }
-    
+
     public function call(Request $request)
     {
         $this->initialize();
-        
+
         $commandString = $request->buildRequest();
-        
+
         $this->write($commandString);
-        
+
         $raw = $this->read();
-        
+
         $response = $this->parseResponse($raw);
-        
+
         return $response;
     }
-    
+
     public function disconnect()
     {
         fclose($this->handle);
     }
 
     /**
-     * @param integer $length
-     * @return string 
+     * @param  integer $length
+     * @return string
      */
     public function readLength($length = 1024)
     {
         return fread($this->handle, $length);
     }
-    
+
     /**
      * @return string
      */
@@ -75,15 +75,15 @@ class Socket extends Connection implements ConnectionInterface
     {
         return trim(fgets($this->handle), 512);
     }
-    
+
     /**
-     * @param string $command
-     * @throws CommandException 
+     * @param  string           $command
+     * @throws CommandException
      */
     public function write($command)
     {
         $writeStatus = fwrite($this->handle, $command);
-        
+
         if (null === $writeStatus) {
             throw new CommandException();
         }

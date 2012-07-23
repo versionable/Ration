@@ -10,11 +10,11 @@ interface CommandInterface
      * @return string
      */
     public function getCommand();
-    
+
     /**
      * Get the command parameters
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function getParameters();
 }

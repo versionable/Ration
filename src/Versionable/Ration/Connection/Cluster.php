@@ -2,7 +2,6 @@
 
 namespace Versionable\Ration\Connection;
 
-use Versionable\Ration\Command\CommandInterface;
 use Versionable\Ration\Request\Request;
 
 class Cluster extends \SplObjectStorage implements ConnectionInterface
@@ -11,9 +10,9 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
      * @var ConnectionInterface
      */
     private $_lastConnection;
-    
+
     /**
-     * @param array $connections 
+     * @param array $connections
      */
     public function __construct(array $connections = array())
     {
@@ -21,47 +20,47 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
             $this->addConnection($connection);
         }
     }
-    
+
     /**
-     * @param ConnectionInterface $connection 
+     * @param ConnectionInterface $connection
      */
     public function addConnection(ConnectionInterface $connection)
     {
         $this->attach($connection, $connection);
     }
-    
+
     /**
      * @return ConnectionInterface
      */
     public function getConnection()
     {
         $this->rewind();
-        
+
         for ($i = 0; $i < rand(0, $this->count()-1); $i++) {
             $this->next();
         }
-        
+
         return $this->current();
     }
-    
+
     public function initialize()
     {
         $this->rewind();
-        
+
         foreach ($this as $connection) {
             $connection->initialize();
         }
     }
-    
+
     public function call(Request $request)
     {
         $this->initialize();
-        
+
         $this->_lastConnection = $this->getConnection();
-        
+
         return $this->_lastConnection->call($request);
     }
-    
+
     public function disconnect()
     {
         $this->rewind();
@@ -70,16 +69,16 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
             $connection->disconnect();
         }
     }
-    
+
     /**
-     * @param integer $length
+     * @param  integer $length
      * @return string
      */
     public function readLength($length = 1024)
     {
         return $this->_lastConnection->readLength($length);
     }
-    
+
     /**
      * @return string
      */
@@ -87,22 +86,22 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
     {
         return $this->_lastConnection->read();
     }
-    
+
     /**
-     * @param string $command 
+     * @param string $command
      */
     public function write($command)
     {
         $this->_lastConnection = $this->getConnection();
-        
+
         $this->_lastConnection->write($command);
     }
-    
+
     public function parseResponse($raw)
     {
         return $this->_lastConnection->parseResponse($raw);
     }
-    
+
     public function __shutdown()
     {
         $this->disconnect();

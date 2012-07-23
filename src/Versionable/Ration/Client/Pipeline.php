@@ -16,25 +16,25 @@ use Versionable\Ration\Command\Exception\PipelineException;
 class Pipeline implements ClientInterface
 {
     /**
-     * @var ConnectionInterface 
+     * @var ConnectionInterface
      */
     protected $connection;
-    
+
     protected $stack;
-    
+
     /**
-     * @param ConnectionInterface $connection 
+     * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection = null)
     {
         $this->connection = $connection;
         $this->stack = new \SplStack();
     }
-    
+
     /**
      * Sets the current connection
-     * 
-     * @param ConnectionInterface $connection 
+     *
+     * @param ConnectionInterface $connection
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -50,7 +50,7 @@ class Pipeline implements ClientInterface
     {
         return $this->connection;
     }
-    
+
     public function getStack()
     {
         return $this->stack;
@@ -60,33 +60,33 @@ class Pipeline implements ClientInterface
     {
         $this->stack = $stack;
     }
-    
+
     public function send(Request $request)
     {
         $this->getStack()->push($request);
     }
-    
+
     public function flush()
     {
         $connection = $this->getConnection();
-        
+
         // first add the multi command and queue each one
         $request = new Request(new Multi());
         $connection->call($request);
-        
+
         $stack = $this->getStack();
-        
+
         // now we started a "transaction" we can queue our requests
         foreach ($stack as $request) {
             $status = $connection->call($request);
-            
+
             if ($status->getContent() != "QUEUED") {
                 throw new PipelineException();
             }
         }
-        
+
         $exec = new Request(new Exec());
-        
+
         return $connection->call($exec);
     }
 }

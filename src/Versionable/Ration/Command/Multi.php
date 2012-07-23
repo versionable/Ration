@@ -8,7 +8,7 @@ class Multi implements CommandInterface
     {
         return 'multi';
     }
-    
+
     public function getParameters()
     {
         return array();

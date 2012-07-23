@@ -9,22 +9,22 @@ use Versionable\Ration\Response\Response;
 class Client
 {
     /**
-     * @var ConnectionInterface 
+     * @var ConnectionInterface
      */
     protected $connection;
-    
+
     /**
-     * @param ConnectionInterface $connection 
+     * @param ConnectionInterface $connection
      */
     public function __construct(ConnectionInterface $connection = null)
     {
         $this->connection = $connection;
     }
-    
+
     /**
      * Sets the current connection
-     * 
-     * @param ConnectionInterface $connection 
+     *
+     * @param ConnectionInterface $connection
      */
     public function setConnection(ConnectionInterface $connection)
     {
@@ -40,18 +40,18 @@ class Client
     {
         return $this->connection;
     }
-    
+
     /**
      * Sends a command to the server
-     * 
+     *
      * @param CommandInterface $command
-     * 
+     *
      * @return Response
      */
     public function send(Request $request)
     {
         $response = $this->getConnection()->call($request, new Response());
-        
+
         return $response;
     }
 }

@@ -8,7 +8,7 @@ class Exec implements CommandInterface
     {
         return 'exec';
     }
-    
+
     public function getParameters()
     {
         return array();

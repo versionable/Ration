@@ -5,7 +5,7 @@ namespace Versionable\Ration\Command;
 class Set implements CommandInterface
 {
     protected $key;
-    
+
     protected $value;
 
     public function __construct($key, $value)
@@ -13,7 +13,7 @@ class Set implements CommandInterface
         $this->key = $key;
         $this->value = $value;
     }
-    
+
     public function getKey()
     {
         return $this->key;

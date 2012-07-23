@@ -10,21 +10,21 @@ use Versionable\Ration\Response\Response;
 class TCP extends Connection
 {
     protected $handle;
-    
+
     protected $host;
-    
+
     protected $port;
-    
+
     /**
-     * @param string $host
-     * @param integer $port 
+     * @param string  $host
+     * @param integer $port
      */
     public function __construct($host = 'localhost', $port = 6379)
     {
         $this->host = $host;
         $this->port = $port;
     }
-    
+
     public function getHost()
     {
         return $this->host;
@@ -44,9 +44,9 @@ class TCP extends Connection
     {
         $this->port = $port;
     }
-    
+
     /**
-     * @throws ConnectionException 
+     * @throws ConnectionException
      */
     public function initialize()
     {
@@ -58,19 +58,19 @@ class TCP extends Connection
             }
         }
     }
-    
+
     public function call(Request $request)
     {
         $this->initialize();
-        
+
         $commandString = $request->buildRequest();
-        
+
         $this->write($commandString);
-        
+
         $raw = $this->read();
-        
+
         $response = $this->parseResponse($raw);
-        
+
         return $response;
     }
 
@@ -92,7 +92,7 @@ class TCP extends Connection
     public function write($command)
     {
         $writeStatus = fwrite($this->handle, $command);
-        
+
         if (null === $writeStatus) {
             throw new CommandException();
         }

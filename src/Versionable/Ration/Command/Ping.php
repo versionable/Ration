@@ -8,7 +8,7 @@ class Ping implements CommandInterface
     {
         return 'ping';
     }
-    
+
     public function getParameters()
     {
         return array();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Versionable\Ration\Exception;
+namespace Versionable\Ration\Response\Exception;
 
 class InvalidResponseException extends ResponseException
 { }

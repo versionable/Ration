@@ -12,10 +12,10 @@ use Versionable\Ration\Request\Request;
 interface ClientInterface
 {
     public function __construct(ConnectionInterface $connection = null);
-    
+
     public function setConnection(ConnectionInterface $connection);
-    
+
     public function getConnection();
-    
+
     public function send(Request $request);
 }
