@@ -2,11 +2,11 @@
 
 namespace Versionable\Ration\Command;
 
-class Ping implements CommandInterface
+class TimeCommand implements CommandInterface
 {
     public function getCommand()
     {
-        return 'ping';
+        return 'time';
     }
 
     public function getParameters()

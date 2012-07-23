@@ -2,7 +2,7 @@
 
 namespace Versionable\Ration\Command;
 
-class Set implements CommandInterface
+class SetCommand implements CommandInterface
 {
     protected $key;
 

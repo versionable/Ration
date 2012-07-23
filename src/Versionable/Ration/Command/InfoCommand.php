@@ -2,11 +2,11 @@
 
 namespace Versionable\Ration\Command;
 
-class Exec implements CommandInterface
+class InfoCommand implements CommandInterface
 {
     public function getCommand()
     {
-        return 'exec';
+        return 'info';
     }
 
     public function getParameters()

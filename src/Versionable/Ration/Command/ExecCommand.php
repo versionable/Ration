@@ -2,11 +2,11 @@
 
 namespace Versionable\Ration\Command;
 
-class Multi implements CommandInterface
+class ExecCommand implements CommandInterface
 {
     public function getCommand()
     {
-        return 'multi';
+        return 'exec';
     }
 
     public function getParameters()
