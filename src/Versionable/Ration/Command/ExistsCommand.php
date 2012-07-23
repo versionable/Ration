@@ -5,12 +5,12 @@ namespace Versionable\Ration\Command;
 class ExistsCommand implements CommandInterface
 {
     protected $key;
-    
+
     public function __construct($key = null)
     {
         $this->key = $key;
     }
-    
+
     public function getKey()
     {
         return $this->key;
@@ -20,7 +20,7 @@ class ExistsCommand implements CommandInterface
     {
         $this->key = $key;
     }
-    
+
     public function getCommand()
     {
         return 'exists';

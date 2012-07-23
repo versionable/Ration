@@ -5,7 +5,7 @@ namespace Versionable\Ration\Command;
 class RenameCommand implements CommandInterface
 {
     protected $key;
-    
+
     protected $newKey;
 
     public function __construct($key, $newKey)
@@ -23,7 +23,7 @@ class RenameCommand implements CommandInterface
     {
         $this->key = $key;
     }
-    
+
     public function getNewKey()
     {
         return $this->newKey;

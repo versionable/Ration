@@ -5,18 +5,18 @@ namespace Versionable\Ration\Command;
 class RestoreCommand implements CommandInterface
 {
     protected $key;
-    
+
     protected $timeToLive;
-    
+
     protected $value;
-    
+
     public function __construct($key = null, $value = null, $timeToLive = 0)
     {
         $this->key = $key;
         $this->value = $value;
         $this->timeToLive = $timeToLive;
     }
-    
+
     public function getKey()
     {
         return $this->key;
@@ -26,7 +26,7 @@ class RestoreCommand implements CommandInterface
     {
         $this->key = $key;
     }
-    
+
     public function getValue()
     {
         return $this->value;
@@ -36,7 +36,7 @@ class RestoreCommand implements CommandInterface
     {
         $this->value = $value;
     }
-    
+
     public function getTimeToLive()
     {
         return $this->timeToLive;
@@ -46,7 +46,7 @@ class RestoreCommand implements CommandInterface
     {
         $this->timeToLive = $timeToLive;
     }
-    
+
     public function getCommand()
     {
         return 'restore';

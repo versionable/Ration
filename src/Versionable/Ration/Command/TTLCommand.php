@@ -5,12 +5,12 @@ namespace Versionable\Ration\Command;
 class TTLCommand implements CommandInterface
 {
     protected $key;
-    
+
     public function __construct($key = null)
     {
         $this->key = $key;
     }
-    
+
     public function getKey()
     {
         return $this->key;
@@ -20,7 +20,7 @@ class TTLCommand implements CommandInterface
     {
         $this->key = $key;
     }
-    
+
     public function getCommand()
     {
         return 'ttl';

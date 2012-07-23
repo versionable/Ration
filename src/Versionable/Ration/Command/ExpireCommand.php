@@ -5,15 +5,15 @@ namespace Versionable\Ration\Command;
 class ExpireCommand implements CommandInterface
 {
     protected $key;
-    
+
     protected $seconds;
-    
+
     public function __construct($key = null, $seconds = 0)
     {
         $this->key = $key;
         $this->seconds = $seconds;
     }
-    
+
     public function getKey()
     {
         return $this->key;
@@ -23,7 +23,7 @@ class ExpireCommand implements CommandInterface
     {
         $this->key = $key;
     }
-    
+
     public function getSeconds()
     {
         return $this->seconds;
@@ -33,7 +33,7 @@ class ExpireCommand implements CommandInterface
     {
         $this->seconds = $seconds;
     }
-    
+
     public function getCommand()
     {
         return 'expire';
