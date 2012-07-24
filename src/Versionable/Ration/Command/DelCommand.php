@@ -6,7 +6,7 @@ class DelCommand implements CommandInterface
 {
     protected $keys;
 
-    public function __construct(array $key = null)
+    public function __construct(array $keys = null)
     {
         $this->keys = $keys;
     }

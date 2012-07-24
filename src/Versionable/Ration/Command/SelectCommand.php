@@ -6,7 +6,7 @@ class SelectCommand implements CommandInterface
 {
     protected $index;
 
-    public function __construct($index)
+    public function __construct($index = null)
     {
         $this->index = $index;
     }

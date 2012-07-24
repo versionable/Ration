@@ -6,7 +6,7 @@ class GetCommand implements CommandInterface
 {
     protected $key;
 
-    public function __construct($key)
+    public function __construct($key = null)
     {
         $this->key = $key;
     }

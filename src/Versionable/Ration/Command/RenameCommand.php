@@ -8,7 +8,7 @@ class RenameCommand implements CommandInterface
 
     protected $newKey;
 
-    public function __construct($key, $newKey)
+    public function __construct($key = null, $newKey = null)
     {
         $this->key = $key;
         $this->newKey = $newKey;

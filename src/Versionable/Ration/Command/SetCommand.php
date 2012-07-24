@@ -8,7 +8,7 @@ class SetCommand implements CommandInterface
 
     protected $value;
 
-    public function __construct($key, $value)
+    public function __construct($key = null, $value = null)
     {
         $this->key = $key;
         $this->value = $value;

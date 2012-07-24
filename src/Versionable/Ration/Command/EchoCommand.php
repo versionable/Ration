@@ -6,7 +6,7 @@ class EchoCommand implements CommandInterface
 {
     protected $message;
 
-    public function __construct($message)
+    public function __construct($message = null)
     {
         $this->message = $message;
     }

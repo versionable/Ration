@@ -6,7 +6,7 @@ class AuthCommand implements CommandInterface
 {
     protected $password;
 
-    public function __construct($password)
+    public function __construct($password = null)
     {
         $this->password = $password;
     }
