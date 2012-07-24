@@ -6,7 +6,7 @@ use Versionable\Ration\Connection\ConnectionInterface;
 use Versionable\Ration\Request\Request;
 use Versionable\Ration\Response\Response;
 
-class Client
+class Client implements ClientInterface
 {
     /**
      * @var ConnectionInterface
