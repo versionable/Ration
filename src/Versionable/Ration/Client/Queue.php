@@ -11,15 +11,34 @@ use Versionable\Ration\Response\Response;
  *
  * @author Harry Walter <harry@ukwebmedia.com>
  */
-class Queue extends Client implements ClientInterface
+class Queue implements ClientInterface
 {
     protected $queue;
 
     public function __construct(ConnectionInterface $connection = null)
     {
-        parent::__construct($connection);
-
+        $this->connection = $connection;
         $this->queue = new \SplQueue();
+    }
+
+    /**
+     * Sets the current connection
+     *
+     * @param ConnectionInterface $connection
+     */
+    public function setConnection(ConnectionInterface $connection)
+    {
+        $this->connection = $connection;
+    }
+
+    /**
+     * Gets the connection
+     *
+     * @return ConnectionInterface
+     */
+    public function getConnection()
+    {
+        return $this->connection;
     }
 
     public function send(Request $request)
