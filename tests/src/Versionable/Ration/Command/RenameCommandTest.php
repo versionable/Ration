@@ -26,86 +26,61 @@ class RenameCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
      * @covers Versionable\Ration\Command\RenameCommand::getKey
-     * @todo Implement testGetKey().
      */
     public function testGetKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getKey());
     }
 
     /**
+     * @depends testGetKey
      * @covers Versionable\Ration\Command\RenameCommand::setKey
-     * @todo Implement testSetKey().
+     * @covers Versionable\Ration\Command\RenameCommand::getKey
      */
     public function testSetKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $key = 'test';
+        
+        $this->object->setKey($key);
+        $this->assertEquals($key, $this->object->getKey());
     }
 
     /**
      * @covers Versionable\Ration\Command\RenameCommand::getNewKey
-     * @todo Implement testGetNewKey().
      */
     public function testGetNewKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getNewKey());
     }
 
     /**
+     * @depends testGetNewKey
      * @covers Versionable\Ration\Command\RenameCommand::setNewKey
-     * @todo Implement testSetNewKey().
+     * @covers Versionable\Ration\Command\RenameCommand::getNewKey
      */
     public function testSetNewKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $key = 'test';
+        
+        $this->object->setNewKey($key);
+        $this->assertEquals($key, $this->object->getNewKey());
     }
 
     /**
      * @covers Versionable\Ration\Command\RenameCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('rename', $this->object->getCommand());
     }
 
     /**
      * @covers Versionable\Ration\Command\RenameCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(null, null), $this->object->getParameters());
     }
 
 }
-
-?>

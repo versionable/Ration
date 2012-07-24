@@ -26,62 +26,40 @@ class EchoCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
      * @covers Versionable\Ration\Command\EchoCommand::getMessage
-     * @todo Implement testGetMessage().
      */
     public function testGetMessage()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getMessage());
     }
 
     /**
+     * @depends testGetMessage
      * @covers Versionable\Ration\Command\EchoCommand::setMessage
-     * @todo Implement testSetMessage().
+     * @covers Versionable\Ration\Command\EchoCommand::getMessage
      */
     public function testSetMessage()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $message = 'test';
+        
+        $this->object->setMessage($message);
+        $this->assertEquals($message, $this->object->getMessage());
     }
 
     /**
      * @covers Versionable\Ration\Command\EchoCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('echo', $this->object->getCommand());
     }
 
     /**
      * @covers Versionable\Ration\Command\EchoCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(null), $this->object->getParameters());
     }
 
 }
-
-?>

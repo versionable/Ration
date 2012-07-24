@@ -6,7 +6,7 @@ class DelCommand implements CommandInterface
 {
     protected $keys;
 
-    public function __construct(array $keys = null)
+    public function __construct(array $keys = array())
     {
         $this->keys = $keys;
     }
@@ -16,7 +16,7 @@ class DelCommand implements CommandInterface
         return $this->keys;
     }
 
-    public function setKeys(array $key)
+    public function setKeys(array $keys)
     {
         $this->keys = $keys;
     }
@@ -34,7 +34,7 @@ class DelCommand implements CommandInterface
 
     public function getCommand()
     {
-        return 'ttl';
+        return 'del';
     }
 
     public function getParameters()

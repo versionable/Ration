@@ -56,7 +56,7 @@ class RestoreCommand implements CommandInterface
     {
         return array(
             $this->getKey(),
-            $this->getSeconds(),
+            $this->getTimeToLive(),
             $this->getValue()
         );
     }

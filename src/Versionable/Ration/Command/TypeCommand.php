@@ -23,7 +23,7 @@ class TypeCommand implements CommandInterface
 
     public function getCommand()
     {
-        return 'ttl';
+        return 'type';
     }
 
     public function getParameters()

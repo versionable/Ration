@@ -26,74 +26,55 @@ class DelCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
      * @covers Versionable\Ration\Command\DelCommand::getKeys
-     * @todo Implement testGetKeys().
      */
     public function testGetKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(), $this->object->getKeys());
     }
 
     /**
+     * @depends testGetKeys
      * @covers Versionable\Ration\Command\DelCommand::setKeys
-     * @todo Implement testSetKeys().
+     * @covers Versionable\Ration\Command\DelCommand::getKeys
      */
     public function testSetKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+        $keys = array(
+            'test', 'test2', 'test3'
         );
+        
+        $this->object->setKeys($keys);
+        $this->assertEquals($keys, $this->object->getKeys());
     }
 
     /**
+     * @depends testGetKeys
      * @covers Versionable\Ration\Command\DelCommand::addKey
-     * @todo Implement testAddKey().
+     * @covers Versionable\Ration\Command\DelCommand::getKeys
      */
     public function testAddKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $key = 'test';
+        
+        $this->object->addKey($key);
+        $this->assertEquals(array($key), $this->object->getKeys());
     }
 
     /**
      * @covers Versionable\Ration\Command\DelCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('del', $this->object->getCommand());
     }
 
     /**
      * @covers Versionable\Ration\Command\DelCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(), $this->object->getParameters());
     }
 
 }
-
-?>

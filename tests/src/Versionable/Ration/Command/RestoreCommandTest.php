@@ -36,100 +36,81 @@ class RestoreCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getKey
-     * @todo Implement testGetKey().
      */
     public function testGetKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getKey());
     }
 
     /**
+     * @depends testGetKey
      * @covers Versionable\Ration\Command\RestoreCommand::setKey
-     * @todo Implement testSetKey().
+     * @covers Versionable\Ration\Command\RestoreCommand::getKey
      */
     public function testSetKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $key = 'test';
+        
+        $this->object->setKey($key);
+        $this->assertEquals($key, $this->object->getKey());
     }
 
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getValue
-     * @todo Implement testGetValue().
      */
     public function testGetValue()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getValue());
     }
 
     /**
+     * @depends testGetvalue
      * @covers Versionable\Ration\Command\RestoreCommand::setValue
-     * @todo Implement testSetValue().
+     * @covers Versionable\Ration\Command\RestoreCommand::getValue
      */
     public function testSetValue()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $value = 'test';
+        
+        $this->object->setValue($value);
+        $this->assertEquals($value, $this->object->getValue());
     }
 
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getTimeToLive
-     * @todo Implement testGetTimeToLive().
      */
     public function testGetTimeToLive()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(0, $this->object->getTimeToLive());
     }
 
     /**
+     * @depends testGetTimeToLive
      * @covers Versionable\Ration\Command\RestoreCommand::setTimeToLive
-     * @todo Implement testSetTimeToLive().
+     * @covers Versionable\Ration\Command\RestoreCommand::getTimeToLive
      */
     public function testSetTimeToLive()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $ttl = 3;
+        
+        $this->object->setTimeToLive($ttl);
+        $this->assertEquals($ttl, $this->object->getTimeToLive());
     }
 
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('restore', $this->object->getCommand());
     }
 
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(null, null, 0), $this->object->getParameters());
     }
 
 }
-
-?>
