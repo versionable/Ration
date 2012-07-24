@@ -26,36 +26,29 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
      * @covers Versionable\Ration\Request\Request::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getCommand());
     }
 
     /**
+     * @depends testGetCommand
      * @covers Versionable\Ration\Request\Request::setCommand
-     * @todo Implement testSetCommand().
+     * @covers Versionable\Ration\Request\Request::getCommand
      */
     public function testSetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $command = $this->getMock('CommandInterface');
+        
+        $this->object->setCommand($command);
+        $this->assertEquals($command, $this->object->getCommand());
+    }
+    
+    public function testCRLF()
+    {
+        $this->assertEquals(chr(13).chr(10), RATION_CRLF);
     }
 
     /**
@@ -64,12 +57,20 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildRequest()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $crlf = chr(13).chr(10);
+        $request = '*1'.$crlf.'$4'.$crlf.'TEST'.$crlf;
+        
+        $command = $this->getMock('CommandInterface', array('getParameters', 'getCommand'));
+        $command->expects($this->once())
+                ->method('getParameters')
+                ->will($this->returnValue(array()));
+        $command->expects($this->once())
+                ->method('getCommand')
+                ->will($this->returnValue('test'));
+        
+        $this->object->setCommand($command);
+        
+        $this->assertEquals($request, $this->object->buildRequest());
     }
 
 }
-
-?>
