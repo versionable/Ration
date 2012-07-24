@@ -24,52 +24,53 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->object = new Client;
     }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
-    /**
-     * @covers Versionable\Ration\Client\Client::setConnection
-     * @todo Implement testSetConnection().
-     */
-    public function testSetConnection()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
+    
     /**
      * @covers Versionable\Ration\Client\Client::getConnection
-     * @todo Implement testGetConnection().
      */
     public function testGetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getConnection());
     }
 
     /**
+     * @depends testGetConnection
+     * @covers Versionable\Ration\Client\Client::setConnection
+     * @covers Versionable\Ration\Client\Client::getConnection
+     */
+    public function testSetConnection()
+    {
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface');
+        
+        $this->object->setConnection($connection);
+        $this->assertEquals($connection, $this->object->getConnection());
+    }
+
+    /**
+     * @depends testSetConnection
      * @covers Versionable\Ration\Client\Client::send
-     * @todo Implement testSend().
      */
     public function testSend()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $response = $this->getMock('Versionable\Ration\Response\Response');
+        
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
+            'call',
+            'initialize',
+            'disconnect',
+            'readLength',
+            'read',
+            'write',
+            'parseResponse'
+        ));
+        
+        $connection->expects($this->any())
+                   ->method('call')
+                   ->will($this->returnValue($response));
+        
+        $this->object->setConnection($connection);
+        $this->assertEquals($response, $this->object->send($request));
     }
 
 }
-
-?>
