@@ -34,7 +34,7 @@ class Request
     {
         $parameters = $this->getCommand()->getParameters();
 
-        array_unshift($parameters, $this->getCommand()->getCommand());
+        array_unshift($parameters, strtoupper($this->getCommand()->getCommand()));
 
         $command = sprintf('*%d%s%s%s', count($parameters), RATION_CRLF, implode(array_map(function($parameters) {
             return sprintf('$%d%s%s', strlen($parameters), RATION_CRLF, $parameters);
