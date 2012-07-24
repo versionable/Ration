@@ -10,7 +10,6 @@ use Versionable\Ration\Response\Response;
  */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var Response
      */
@@ -24,52 +23,82 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->object = new Response;
     }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-        
-    }
-
+    
     /**
      * @covers Versionable\Ration\Response\Response::getContent
-     * @todo Implement testGetContent().
      */
     public function testGetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getContent());
     }
 
     /**
+     * @depends testGetContent
      * @covers Versionable\Ration\Response\Response::setContent
-     * @todo Implement testSetContent().
+     * @covers Versionable\Ration\Response\Response::getContent
      */
     public function testSetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $content = 'test';
+        
+        $this->object->setContent($content);
+        $this->assertEquals($content, $this->object->getContent());
     }
 
     /**
      * @covers Versionable\Ration\Response\Response::parse
-     * @todo Implement testParse().
+     * @expectedException Versionable\Ration\Response\Exception\ResponseException
+     */
+    public function testParseException()
+    {
+        $raw = '-';
+        
+        $this->setExpectedExceptionFromAnnotation();
+        $this->object->parse($raw);
+    }
+    
+    /**
+     * @depends testGetContent
+     * @depends testSetContent
+     * @covers Versionable\Ration\Response\Response::setContent
+     * @covers Versionable\Ration\Response\Response::getContent
+     * @covers Versionable\Ration\Response\Response::parse
+     */
+    public function testParseOk()
+    {
+        $raw = '+OK';
+        
+        $this->object->parse($raw);
+        $this->assertTrue($this->object->getContent());
+    }
+    
+    /**
+     * @depends testGetContent
+     * @depends testSetContent
+     * @covers Versionable\Ration\Response\Response::setContent
+     * @covers Versionable\Ration\Response\Response::getContent
+     * @covers Versionable\Ration\Response\Response::parse
+     */
+    public function testParseInteger()
+    {
+        $raw = ':2';
+        
+        $this->object->parse($raw);
+        $this->assertEquals(2, $this->object->getContent());
+    }
+    
+    /**
+     * @depends testGetContent
+     * @depends testSetContent
+     * @covers Versionable\Ration\Response\Response::setContent
+     * @covers Versionable\Ration\Response\Response::getContent
+     * @covers Versionable\Ration\Response\Response::parse
      */
     public function testParse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $raw = 'test';
+     
+        $this->object->parse($raw);
+        $this->assertEquals($raw, $this->object->getContent());
     }
-
 }
-
-?>
