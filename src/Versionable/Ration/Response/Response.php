@@ -2,6 +2,8 @@
 
 namespace Versionable\Ration\Response;
 
+use Versionable\Ration\Response\Exception\ResponseException;
+
 /**
  * Description of Response
  *
