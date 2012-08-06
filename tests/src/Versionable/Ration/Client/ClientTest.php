@@ -57,7 +57,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         
         $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
             'call',
-            'initialize',
+            'connect',
             'disconnect',
             'readLength',
             'read',
