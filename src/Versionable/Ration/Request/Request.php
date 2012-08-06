@@ -4,8 +4,6 @@ namespace Versionable\Ration\Request;
 
 use Versionable\Ration\Command\CommandInterface;
 
-define('RATION_CRLF', sprintf('%s%s', chr(13), chr(10)));
-
 /**
  * Description of Request
  *
@@ -14,10 +12,13 @@ define('RATION_CRLF', sprintf('%s%s', chr(13), chr(10)));
 class Request
 {
     protected $command;
+    
+    private $crlf;
 
     public function __construct(CommandInterface $command = null)
     {
         $this->command = $command;
+        $this->crlf = chr(13).chr(10);
     }
 
     public function getCommand()
@@ -33,12 +34,13 @@ class Request
     public function buildRequest()
     {
         $parameters = $this->getCommand()->getParameters();
+        $crlf = $this->crlf;
 
         array_unshift($parameters, strtoupper($this->getCommand()->getCommand()));
 
-        $command = sprintf('*%d%s%s%s', count($parameters), RATION_CRLF, implode(array_map(function($parameters) {
-            return sprintf('$%d%s%s', strlen($parameters), RATION_CRLF, $parameters);
-        }, $parameters), RATION_CRLF), RATION_CRLF);
+        $command = sprintf('*%d%s%s%s', count($parameters), $crlf, implode(array_map(function($parameters) use ($crlf) {
+            return sprintf('$%d%s%s', strlen($parameters), $crlf, $parameters);
+        }, $parameters), $crlf), $crlf);
 
         return $command;
     }

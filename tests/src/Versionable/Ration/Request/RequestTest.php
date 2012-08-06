@@ -48,12 +48,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     
     public function testCRLF()
     {
-        $this->assertEquals(chr(13).chr(10), RATION_CRLF);
+        $this->assertEquals(chr(13).chr(10), $this->readAttribute($this->object, 'crlf'));
     }
 
     /**
+     * @depends testSetCommand
+     * @depends testGetCommand
      * @covers Versionable\Ration\Request\Request::buildRequest
-     * @todo Implement testBuildRequest().
+     * @covers Versionable\Ration\Request\Request::setCommand
+     * @covers Versionable\Ration\Request\Request::getCommand
      */
     public function testBuildRequest()
     {
