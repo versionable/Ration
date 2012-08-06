@@ -96,8 +96,6 @@ class TCPTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAddress()
     {
-        $address = 'tcp://localhost:6379';
-        
-        $this->assertEquals($address, $this->object->getAddress());
+        $this->assertEquals('tcp://localhost:6379', $this->object->getAddress());
     }
 }
