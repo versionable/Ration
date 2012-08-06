@@ -41,11 +41,7 @@ class TCP implements StreamInterface
 
     public function getAddress()
     {
-        if (true === $this->isValid()) {
-            return sprintf('tcp://%s:%d', $this->getHost(), $this->getPort());
-        }
-        
-        return false;
+        return sprintf('tcp://%s:%d', $this->getHost(), $this->getPort());
     }
 
     public function isValid()
