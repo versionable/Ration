@@ -2,7 +2,9 @@
 
 namespace Versionable\Ration\Connection;
 
-require_once dirname(__FILE__) . '/../../../../../src/Versionable/Ration/Connection/Connection.php';
+use Versionable\Ration\Connection\Connection;
+use Versionable\Ration\Stream\TestWrapper;
+use Versionable\Ration\Connection\Stream\TCP;
 
 /**
  * Test class for Connection.
@@ -33,127 +35,255 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         
     }
+    
+    protected function getStreamAddress()
+    {
+        $streamAddress = $this->getMock('\Versionable\Ration\Connection\Stream\StreamInterface');
+        $streamAddress->expects($this->any())
+                      ->method('getAddress')
+                      ->will($this->returnValue(TestWrapper::SCHEME.'://test'));
+        
+        return $streamAddress;
+    }
+    
+    /**
+     * Register the custom stream wrapper before the class is instantiated
+     */
+    public static function setUpBeforeClass()
+    {
+        stream_wrapper_register(TestWrapper::SCHEME, '\Versionable\Ration\Stream\TestWrapper');
+    }
 
     /**
      * @covers Versionable\Ration\Connection\Connection::getHandle
-     * @todo Implement testGetHandle().
      */
     public function testGetHandle()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getHandle());
     }
 
     /**
      * @covers Versionable\Ration\Connection\Connection::getStreamAddress
-     * @todo Implement testGetStreamAddress().
      */
     public function testGetStreamAddress()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getStreamAddress());
     }
 
     /**
+     * @depends testGetStreamAddress
      * @covers Versionable\Ration\Connection\Connection::setStreamAddress
-     * @todo Implement testSetStreamAddress().
+     * @covers Versionable\Ration\Connection\Connection::getStreamAddress
      */
     public function testSetStreamAddress()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $streamAddress = $this->getMock('\Versionable\Ration\Connection\Stream\StreamInterface');
+        
+        $this->object->setStreamAddress($streamAddress);
+        $this->assertEquals($streamAddress, $this->object->getStreamAddress());
     }
 
     /**
+     * @depends testSetStreamAddress
+     * @depends testGetStreamAddress
+     * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::connect
-     * @todo Implement testConnect().
+     * @covers Versionable\Ration\Connection\Connection::setStreamAddress
+     * @covers Versionable\Ration\Connection\Connection::getStreamAddress
+     * @covers Versionable\Ration\Connection\Connection::getHandle
      */
     public function testConnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+    }
+    
+    /**
+     * @depends testSetStreamAddress
+     * @depends testGetStreamAddress
+     * @depends testGetHandle
+     * @covers Versionable\Ration\Connection\Connection::connect
+     * @covers Versionable\Ration\Connection\Connection::setStreamAddress
+     * @covers Versionable\Ration\Connection\Connection::getStreamAddress
+     * @covers Versionable\Ration\Connection\Connection::getHandle
+     * @expectedException Versionable\Ration\Connection\Exception\ConnectionException
+     */
+    public function testConnectException()
+    {
+        $streamAddress = $this->getMock('\Versionable\Ration\Connection\Stream\StreamInterface');
+        
+        $this->object->setStreamAddress($streamAddress);
+        
+        $this->object->connect();
     }
 
     /**
+     * @depends testConnect
+     * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::read
-     * @todo Implement testRead().
+     * @covers Versionable\Ration\Connection\Connection::getHandle
      */
     public function testRead()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+        
+        $this->assertEmpty($this->object->read());
     }
 
     /**
+     * @depends testSetStreamAddress
+     * @depends testGetStreamAddress
+     * @depends testConnect
+     * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::readLength
-     * @todo Implement testReadLength().
+     * @covers Versionable\Ration\Connection\Connection::getHandle
      */
     public function testReadLength()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+        
+        $this->assertEmpty($this->object->readLength());
     }
 
     /**
+     * @depends testConnect
+     * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::write
-     * @todo Implement testWrite().
+     * @covers Versionable\Ration\Connection\Connection::getHandle
      */
     public function testWrite()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+        
+        $this->object->write('test');
+    }
+    
+    /**
+     * @depends testConnect
+     * @depends testGetHandle
+     * @covers Versionable\Ration\Connection\Connection::write
+     * @covers Versionable\Ration\Connection\Connection::getHandle
+     * @expectedException Versionable\Ration\Command\Exception\CommandException
+     */
+    public function testWriteException()
+    {
+        $this->object->write('test');
     }
 
     /**
+     * @covers Versionable\Ration\Connection\Connection::getHandle
      * @covers Versionable\Ration\Connection\Connection::disconnect
-     * @todo Implement testDisconnect().
      */
     public function testDisconnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->disconnect();
     }
 
     /**
+     * @depends testRead
+     * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
-     * @todo Implement testParseResponse().
      */
     public function testParseResponse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf('Versionable\Ration\Response\Response', $this->object->parseResponse('test'));
     }
-
+    
     /**
-     * @covers Versionable\Ration\Connection\Connection::__shutdown
-     * @todo Implement test__shutdown().
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     * @covers Versionable\Ration\Connection\Connection::read
      */
-    public function test__shutdown()
+    public function testParseResponseMulti()
     {
-        // Remove the following lines when you implement this test.
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+        
+        $this->assertInternalType('array', $this->object->parseResponse('*2'));
+    }
+    
+    /**
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     */
+    public function testParseResponseBreakEarly()
+    {
+        $this->object->parseResponse('*-1');
+    }
+    
+    /**
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     */
+    public function testParseResponseMultilineBreakEarly()
+    {
+        $this->object->parseResponse('$-1');
+    }
+    
+    /**
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     * @covers Versionable\Ration\Connection\Connection::readLength
+     */
+    public function testParseResponseMultilineBlank()
+    {
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->connect();
+        
+        $raw = '$0';
+        $this->assertNull($this->object->parseResponse($raw));
+    }
+    
+    /**
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     * @covers Versionable\Ration\Connection\Connection::readLength
+     * @todo implement testParseResponseMultiline
+     */
+    public function testParseResponseMultiline()
+    {
         $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+            'Multiline responses cause an infinate loop as the next read does not terminate the response'
         );
     }
-
+    
+    /**
+     * @depends testRead
+     * @depends testReadLength
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     * @expectedException Versionable\Ration\Response\Exception\ResponseException
+     */
+    public function testParseResponseErrorException()
+    {
+        $this->object->parseResponse('-');
+    }
+    
+    /**
+     * @depends testConnect
+     * @depends testRead
+     * @depends testWrite
+     * @depends testParseResponse
+     * @covers Versionable\Ration\Connection\Connection::call
+     * @covers Versionable\Ration\Connection\Connection::read
+     * @covers Versionable\Ration\Connection\Connection::write
+     * @covers Versionable\Ration\Connection\Connection::parseResponse
+     */
+    public function testCall()
+    {
+        $request = $this->getMock('\Versionable\Ration\Request\Request', array('buildRequest'));
+        $request->expects($this->any())
+                ->method('buildRequest')
+                ->will($this->returnValue('TEST'));
+        
+        $this->object->setStreamAddress($this->getStreamAddress());
+        $this->object->call($request);
+    }
 }
-
-?>
