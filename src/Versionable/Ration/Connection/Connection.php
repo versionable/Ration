@@ -7,6 +7,7 @@ use Versionable\Ration\Response\Exception\ResponseException;
 use Versionable\Ration\Response\Response;
 use Versionable\Ration\Request\Request;
 use Versionable\Ration\Connection\Stream\StreamInterface;
+use Versionable\Ration\Command\Exception\CommandException;
 
 class Connection implements ConnectionInterface
 {
@@ -109,9 +110,9 @@ class Connection implements ConnectionInterface
      */
     public function write($command)
     {
-        $writeStatus = fwrite($this->getHandle(), $command);
+        $writeStatus = @fwrite($this->getHandle(), $command);
 
-        if (null === $writeStatus) {
+        if (false === $writeStatus) {
             throw new CommandException();
         }
     }
