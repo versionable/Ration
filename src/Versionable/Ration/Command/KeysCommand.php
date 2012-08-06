@@ -37,6 +37,6 @@ class KeysCommand implements CommandInterface
 
     public function getParameters()
     {
-        return array($this->getPatterm());
+        return array($this->getPattern());
     }
 }

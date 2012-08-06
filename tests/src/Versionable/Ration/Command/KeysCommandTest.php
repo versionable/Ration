@@ -36,52 +36,41 @@ class KeysCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\KeysCommand::getPattern
-     * @todo Implement testGetPattern().
      */
     public function testGetPattern()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getPattern());
     }
 
     /**
+     * @depends testGetPattern
      * @covers Versionable\Ration\Command\KeysCommand::setPattern
-     * @todo Implement testSetPattern().
+     * @covers Versionable\Ration\Command\KeysCommand::getPattern
      */
     public function testSetPattern()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $pattern = '[\w]+';
+        
+        $this->object->setPattern($pattern);
+        $this->assertEquals($pattern, $this->object->getPattern());
     }
 
     /**
      * @covers Versionable\Ration\Command\KeysCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('keys', $this->object->getCommand());
     }
 
     /**
+     * @depends testGetPattern
      * @covers Versionable\Ration\Command\KeysCommand::getParameters
-     * @todo Implement testGetParameters().
+     * @covers Versionable\Ration\Command\KeysCommand::getPattern
      */
     public function testGetParameters()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(array(null), $this->object->getParameters());
     }
 
 }
-
-?>
