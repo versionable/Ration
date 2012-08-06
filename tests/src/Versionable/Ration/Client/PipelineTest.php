@@ -89,7 +89,9 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testSetConnection
+     * @depends testGetConnection
      * @covers Versionable\Ration\Client\Pipeline::setConnection
+     * @covers Versionable\Ration\Client\Pipeline::getConnection
      * @covers Versionable\Ration\Client\Pipeline::flush
      */
     public function testFlush()
