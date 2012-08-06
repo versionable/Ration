@@ -2,7 +2,7 @@
 
 namespace Versionable\Ration\Connection\Stream;
 
-require_once dirname(__FILE__) . '/../../../../../../src/Versionable/Ration/Connection/Stream/UnixSocket.php';
+use Versionable\Ration\Connection\Stream\UnixSocket;
 
 /**
  * Test class for UnixSocket.

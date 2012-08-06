@@ -2,7 +2,7 @@
 
 namespace Versionable\Ration\Connection\Stream;
 
-require_once dirname(__FILE__) . '/../../../../../../src/Versionable/Ration/Connection/Stream/TCP.php';
+use Versionable\Ration\Connection\Stream\TCP;
 
 /**
  * Test class for TCP.
