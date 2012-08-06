@@ -89,8 +89,6 @@ class UnixSocketTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsValidException()
     {
-        $this->setExpectedException('Versionable\Ration\Connection\Exception\InvalidStreamException');
-        
         $this->object->isValid();
     }
 }
