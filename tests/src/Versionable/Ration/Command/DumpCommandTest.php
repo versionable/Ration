@@ -56,7 +56,6 @@ class DumpCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\DumpCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {

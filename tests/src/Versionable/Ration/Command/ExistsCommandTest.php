@@ -56,7 +56,6 @@ class ExistsCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\ExistsCommand::getParameters
-     * @todo Implement testGetParameters().
      */
     public function testGetParameters()
     {

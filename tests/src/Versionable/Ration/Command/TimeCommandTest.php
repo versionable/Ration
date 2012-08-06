@@ -27,7 +27,6 @@ class TimeCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\TimeCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {

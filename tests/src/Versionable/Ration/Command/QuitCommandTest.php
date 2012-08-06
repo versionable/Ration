@@ -27,7 +27,6 @@ class QuitCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Command\QuitCommand::getCommand
-     * @todo Implement testGetCommand().
      */
     public function testGetCommand()
     {
