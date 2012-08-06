@@ -39,22 +39,21 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
         for ($i = 0; $i < rand(0, $this->count()-1); $i++) {
             $this->next();
         }
+        
+        $connection = $this->current();
+        $connection->connect();
 
-        return $this->current();
+        return $connection;
     }
 
-    public function initialize()
+    public function connect()
     {
         $this->rewind();
-
-        foreach ($this as $connection) {
-            $connection->initialize();
-        }
     }
 
     public function call(Request $request)
     {
-        $this->initialize();
+        $this->connect();
 
         $this->_lastConnection = $this->getConnection();
 

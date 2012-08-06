@@ -6,7 +6,7 @@ use Versionable\Ration\Request\Request;
 
 interface ConnectionInterface
 {
-    public function initialize();
+    public function connect();
 
     public function disconnect();
 

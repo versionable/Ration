@@ -5,9 +5,125 @@ namespace Versionable\Ration\Connection;
 use Versionable\Ration\Response\Exception\InvalidResponseException;
 use Versionable\Ration\Response\Exception\ResponseException;
 use Versionable\Ration\Response\Response;
+use Versionable\Ration\Request\Request;
+use Versionable\Ration\Connection\Stream\StreamInterface;
 
-abstract class Connection implements ConnectionInterface
+class Connection implements ConnectionInterface
 {
+    protected $handle;
+    
+    protected $streamAddress;
+
+    public function __construct(StreamInterface $streamAddress = null)
+    {
+        $this->streamAddress = $streamAddress;
+    }
+    
+    /**Gets the current stream resource
+     * 
+     * 
+     * @return Resource
+     */
+    public function getHandle()
+    {
+        return $this->handle;
+    }
+    
+    /**
+     * Get the stream address instance
+     * 
+     * @return Versionable\Ration\Connection\Stream\StreamInterface
+     */
+    public function getStreamAddress()
+    {
+        return $this->streamAddress;
+    }
+
+    /**
+     * Set the stream address
+     * 
+     * @param Versionable\Ration\Connection\Stream\StreamInterface $streamAddress
+     */
+    public function setStreamAddress(StreamInterface $streamAddress)
+    {
+        $this->streamAddress = $streamAddress;
+    }
+    
+    /**
+     * Try to connect to the supplied stream address
+     * 
+     * @throws Exception\ConnectionException
+     */
+    public function connect()
+    {
+        if (null === $this->getHandle()) {
+            $this->handle = @fopen($this->getStreamAddress()->getAddress(), 'r+');
+            
+            if (false === $this->getHandle()) {
+                throw new Exception\ConnectionException();
+            }
+        }
+    }
+    
+    public function call(Request $request)
+    {
+        $this->connect();
+        
+        $commandString = $request->buildRequest();
+        
+        $this->write($commandString);
+        
+        $raw = $this->read();
+        
+        $response = $this->parseResponse($raw);
+        
+        return $response;
+    }
+    
+    /**
+     * Read 512 bytes from the stream
+     * 
+     * @return string
+     */
+    public function read()
+    {
+        return trim(fgets($this->getHandle()), 512);
+    }
+
+    /**
+     * Read a specified length of bytes from the stream
+     * 
+     * @param integer $length
+     * @return string
+     */
+    public function readLength($length = 1024)
+    {
+        return fread($this->getHandle(), $length);
+    }
+    
+    /**
+     * write the command to the stream
+     * 
+     * @param string $command
+     * @throws CommandException
+     */
+    public function write($command)
+    {
+        $writeStatus = fwrite($this->getHandle(), $command);
+
+        if (null === $writeStatus) {
+            throw new CommandException();
+        }
+    }
+    
+    /**
+     * Close the connection
+     */
+    public function disconnect()
+    {
+        @fclose($this->getHandle());
+    }
+    
     /**
      * @param string $raw
      *
@@ -71,5 +187,13 @@ abstract class Connection implements ConnectionInterface
         }
 
         return $response;
+    }
+    
+    /**
+     * Caled on class shutdown, disconnects
+     */
+    public function __shutdown()
+    {
+        $this->disconnect();
     }
 }
