@@ -55,6 +55,13 @@ class Pipeline implements ClientInterface
     {
         return $this->stack;
     }
+    
+    public function reset()
+    {
+        $this->stack = new \SplStack();
+        
+        return $this->getStack();
+    }
 
     public function send(Request $request)
     {
