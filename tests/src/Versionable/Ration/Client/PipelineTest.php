@@ -36,76 +36,82 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Client\Pipeline::setConnection
-     * @todo Implement testSetConnection().
      */
     public function testSetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface');
+        
+        $this->object->setConnection($connection);
+        $this->assertEquals($connection, $this->object->getConnection());
     }
 
     /**
      * @covers Versionable\Ration\Client\Pipeline::getConnection
-     * @todo Implement testGetConnection().
      */
     public function testGetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getConnection());
     }
 
     /**
      * @covers Versionable\Ration\Client\Pipeline::getStack
-     * @todo Implement testGetStack().
      */
     public function testGetStack()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf('\\SplStack', $this->object->getStack());
     }
-
+    
     /**
-     * @covers Versionable\Ration\Client\Pipeline::setStack
-     * @todo Implement testSetStack().
+     * @depends testGetStack
+     * @covers Versionable\Ration\Client\Pipeline::getStack
+     * @covers Versionable\Ration\Client\Pipeline::reset
      */
-    public function testSetStack()
+    public function testReset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf('\\SplStack', $this->object->reset());
     }
 
     /**
+     * @depends testGetStack
      * @covers Versionable\Ration\Client\Pipeline::send
-     * @todo Implement testSend().
+     * @covers Versionable\Ration\Client\Pipeline::getStack
      */
     public function testSend()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $stack = new \SplStack();
+        $stack->push($request);
+        
+        $this->object->send($request);
+        
+        $this->assertEquals($stack, $this->object->getStack());
     }
 
     /**
+     * @depends testSetConnection
+     * @covers Versionable\Ration\Client\Pipeline::setConnection
      * @covers Versionable\Ration\Client\Pipeline::flush
-     * @todo Implement testFlush().
      */
     public function testFlush()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $response = $this->getMock('Versionable\Ration\Response\Response');
+        
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
+            'call',
+            'connect',
+            'disconnect',
+            'readLength',
+            'read',
+            'write',
+            'parseResponse'
+        ));
+        
+        $connection->expects($this->any())
+                   ->method('call')
+                   ->will($this->returnValue($response));
+        
+        $this->object->setConnection($connection);
+        $this->assertEquals($response, $this->object->flush());
     }
-
 }
-
-?>
