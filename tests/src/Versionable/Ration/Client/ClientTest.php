@@ -48,6 +48,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testSetConnection
+     * @covers Versionable\Ration\Client\Client::setConnection
      * @covers Versionable\Ration\Client\Client::send
      */
     public function testSend()
