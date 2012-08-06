@@ -36,52 +36,61 @@ class UnixSocketTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Connection\Stream\UnixSocket::getPath
-     * @todo Implement testGetPath().
      */
     public function testGetPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getPath());
     }
 
     /**
+     * @depends testGetPath
      * @covers Versionable\Ration\Connection\Stream\UnixSocket::setPath
-     * @todo Implement testSetPath().
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::getPath
      */
     public function testSetPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Versionable\Ration\Connection\Stream\UnixSocket::getAddress
-     * @todo Implement testGetAddress().
-     */
-    public function testGetAddress()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $path = 'test';
+        
+        $this->object->setPath($path);
+        $this->assertEquals($path, $this->object->getPath());
     }
 
     /**
      * @covers Versionable\Ration\Connection\Stream\UnixSocket::isValid
-     * @todo Implement testIsValid().
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::setPath
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::getPath
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::getAddress
+     */
+    public function testGetAddress()
+    {
+        $path = sys_get_temp_dir();
+        
+        $this->object->setPath($path);
+        $this->assertEquals('file://'.$path, $this->object->getAddress());
+    }
+
+    /**
+     * @depends testSetPath
+     * @depends testGetPath
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::isValid
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::setPath
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::getPath
      */
     public function testIsValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->setPath(sys_get_temp_dir());
+        
+        $this->assertTrue($this->object->isValid());
     }
-
+    
+    /**
+     * @covers Versionable\Ration\Connection\Stream\UnixSocket::isValid
+     * @expectedException Versionable\Ration\Connection\Exception\InvalidStreamException
+     */
+    public function testIsValidException()
+    {
+        $this->setExpectedException('Versionable\Ration\Connection\Exception\InvalidStreamException');
+        
+        $this->object->isValid();
+    }
 }
-
-?>
