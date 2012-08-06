@@ -7,7 +7,7 @@ use Versionable\Ration\Command\CommandInterface;
 /**
  * Description of Request
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class Request
 {

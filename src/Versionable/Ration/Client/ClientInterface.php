@@ -7,7 +7,7 @@ use Versionable\Ration\Request\Request;
 
 /**
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 interface ClientInterface
 {

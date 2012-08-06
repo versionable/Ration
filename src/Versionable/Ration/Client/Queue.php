@@ -9,7 +9,7 @@ use Versionable\Ration\Response\Response;
 /**
  * Description of Queue
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class Queue implements ClientInterface
 {

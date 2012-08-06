@@ -5,7 +5,7 @@ namespace Versionable\Ration\Connection\Stream;
 /**
  * Description of TCP
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class TCP implements StreamInterface
 {

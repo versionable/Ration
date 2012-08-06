@@ -11,7 +11,7 @@ use Versionable\Ration\Command\Exception\PipelineException;
 /**
  * Description of Pipeline
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class Pipeline implements ClientInterface
 {

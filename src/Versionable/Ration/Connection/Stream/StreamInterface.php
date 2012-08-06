@@ -4,7 +4,7 @@ namespace Versionable\Ration\Connection\Stream;
 
 /**
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 interface StreamInterface
 {

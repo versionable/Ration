@@ -7,7 +7,7 @@ use Versionable\Ration\Response\Exception\ResponseException;
 /**
  * Description of Response
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class Response
 {

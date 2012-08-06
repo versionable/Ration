@@ -7,7 +7,7 @@ use Versionable\Ration\Connection\Exception\InvalidStreamException;
 /**
  * Description of File
  *
- * @author Harry Walter <harry@ukwebmedia.com>
+ * @author Harry Walter <harry.walter@lqdinternet.com>
  */
 class UnixSocket implements StreamInterface
 {
