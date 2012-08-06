@@ -39,7 +39,7 @@ class UnixSocket implements StreamInterface
 
     public function isValid()
     {
-        if (false === \is_writable($filename)) {
+        if (false === \is_writable($this->getPath())) {
             throw new InvalidStreamException();
         }
         
