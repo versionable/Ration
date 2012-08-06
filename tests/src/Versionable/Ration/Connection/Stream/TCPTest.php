@@ -92,7 +92,6 @@ class TCPTest extends \PHPUnit_Framework_TestCase
      * @covers Versionable\Ration\Connection\Stream\TCP::getHost
      * @covers Versionable\Ration\Connection\Stream\TCP::getPort
      * @covers Versionable\Ration\Connection\Stream\TCP::isValid
-     * @todo Implement testGetAddress().
      */
     public function testGetAddress()
     {
