@@ -33,127 +33,158 @@ class ClusterTest extends \PHPUnit_Framework_TestCase
     {
         
     }
+    
+    protected function getConnection()
+    {
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
+            'connect',
+            'disconnect',
+            'readLength',
+            'read',
+            'write',
+            'call',
+            'parseResponse'
+        ), array(), 'Connection_'.  uniqid());
+        
+        return $connection;
+    }
 
     /**
      * @covers Versionable\Ration\Connection\Cluster::addConnection
-     * @todo Implement testAddConnection().
      */
     public function testAddConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $connection = $this->getConnection();
+        
+        $this->object->addConnection($connection);
+        $this->object->rewind();
+        
+        $this->assertEquals($connection, $this->object->current());
     }
 
     /**
+     * @depends testAddConnection
      * @covers Versionable\Ration\Connection\Cluster::getConnection
-     * @todo Implement testGetConnection().
      */
     public function testGetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $connection = $this->getConnection();
+        
+        $this->object->addConnection($connection);
+        
+        $this->assertEquals($connection, $this->object->getConnection());
     }
-
+    
     /**
-     * @covers Versionable\Ration\Connection\Cluster::initialize
-     * @todo Implement testInitialize().
+     * @depends testAddConnection
+     * @covers Versionable\Ration\Connection\Cluster::getConnection
      */
-    public function testInitialize()
+    public function testGetConnectionMultiple()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $connection = $this->getConnection();
+        $connection2 = $this->getConnection();
+        
+        $this->object->addConnection($connection);
+        $this->object->addConnection($connection2);
+        
+        $this->assertContains($this->object->getConnection(), array(
+            $connection,
+            $connection2
+        ));
     }
 
     /**
+     * @covers Versionable\Ration\Connection\Cluster::connect
+     */
+    public function testConnect()
+    {
+        $this->object->connect();
+    }
+
+    /**
+     * @depends testConnect
+     * @depends testAddConnection
      * @covers Versionable\Ration\Connection\Cluster::call
-     * @todo Implement testCall().
+     * @covers Versionable\Ration\Connection\Cluster::getConnection
+     * @covers Versionable\Ration\Connection\Cluster::connect
      */
     public function testCall()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        
+        $this->object->addConnection($this->getConnection());
+        $this->assertEmpty($this->object->call($request));
     }
 
     /**
      * @covers Versionable\Ration\Connection\Cluster::disconnect
-     * @todo Implement testDisconnect().
      */
     public function testDisconnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->addConnection($this->getConnection());
+        
+        $this->object->disconnect();
+        $this->assertEquals(0, $this->object->count());
     }
 
     /**
+     * @depends testAddConnection
+     * @depends testCall
+     * @covers Versionable\Ration\Connection\Cluster::addConnection
+     * @covers Versionable\Ration\Connection\Cluster::call
      * @covers Versionable\Ration\Connection\Cluster::readLength
-     * @todo Implement testReadLength().
      */
     public function testReadLength()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        
+        $this->object->addConnection($this->getConnection());
+        $this->object->call($request);
+        
+        $this->assertEmpty($this->object->readLength());
     }
 
     /**
+     * @depends testAddConnection
+     * @depends testCall
+     * @covers Versionable\Ration\Connection\Cluster::addConnection
+     * @covers Versionable\Ration\Connection\Cluster::call
      * @covers Versionable\Ration\Connection\Cluster::read
-     * @todo Implement testRead().
      */
     public function testRead()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        
+        $this->object->addConnection($this->getConnection());
+        $this->object->call($request);
+        
+        $this->assertEmpty($this->object->read());
     }
 
     /**
+     * @depends testAddConnection
+     * @covers Versionable\Ration\Connection\Cluster::addConnection
+     * @covers Versionable\Ration\Connection\Cluster::getConnection
      * @covers Versionable\Ration\Connection\Cluster::write
-     * @todo Implement testWrite().
      */
     public function testWrite()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->object->addConnection($this->getConnection());
+        $this->object->write('test');
     }
 
     /**
+     * @depends testAddConnection
+     * @depends testCall
      * @covers Versionable\Ration\Connection\Cluster::parseResponse
-     * @todo Implement testParseResponse().
      */
     public function testParseResponse()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        
+        $this->object->addConnection($this->getConnection());
+        $this->object->call($request);
+        
+        $this->assertEmpty($this->object->parseResponse(''));
     }
-
-    /**
-     * @covers Versionable\Ration\Connection\Cluster::__shutdown
-     * @todo Implement test__shutdown().
-     */
-    public function test__shutdown()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }
-
-?>
