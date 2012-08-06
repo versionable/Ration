@@ -97,7 +97,13 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
     public function testFlush()
     {
         $request = $this->getMock('Versionable\Ration\Request\Request');
-        $response = $this->getMock('Versionable\Ration\Response\Response');
+        $response = $this->getMock('Versionable\Ration\Response\Response', array(
+            'getContent'
+        ));
+        
+        $response->expects($this->any())
+                 ->method('getContent')
+                 ->will($this->returnValue('QUEUED'));
         
         $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
             'call',
@@ -113,6 +119,46 @@ class PipelineTest extends \PHPUnit_Framework_TestCase
                    ->method('call')
                    ->will($this->returnValue($response));
         
+        $this->object->send($request);
+        $this->object->setConnection($connection);
+        $this->assertEquals($response, $this->object->flush());
+    }
+    
+    /**
+     * @depends testSetConnection
+     * @depends testGetConnection
+     * @covers Versionable\Ration\Client\Pipeline::setConnection
+     * @covers Versionable\Ration\Client\Pipeline::getConnection
+     * @covers Versionable\Ration\Client\Pipeline::flush
+     * @covers Versionable\Ration\Command\Exception\PipelineException
+     * @expectedException Versionable\Ration\Command\Exception\PipelineException
+     */
+    public function testFlushException()
+    {
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $response = $this->getMock('Versionable\Ration\Response\Response', array(
+            'getContent'
+        ));
+        
+        $response->expects($this->any())
+                 ->method('getContent')
+                 ->will($this->returnValue('FAIL'));
+        
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
+            'call',
+            'connect',
+            'disconnect',
+            'readLength',
+            'read',
+            'write',
+            'parseResponse'
+        ));
+        
+        $connection->expects($this->any())
+                   ->method('call')
+                   ->will($this->returnValue($response));
+        
+        $this->object->send($request);
         $this->object->setConnection($connection);
         $this->assertEquals($response, $this->object->flush());
     }
