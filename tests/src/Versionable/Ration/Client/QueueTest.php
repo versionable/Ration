@@ -33,67 +33,114 @@ class QueueTest extends \PHPUnit_Framework_TestCase
     {
         
     }
-
+    
     /**
-     * @covers Versionable\Ration\Client\Queue::send
-     * @todo Implement testSend().
+     * @covers Versionable\Ration\Client\Queue::getConnection
      */
-    public function testSend()
+    public function testGetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getConnection());
     }
-
+    
     /**
-     * @covers Versionable\Ration\Client\Queue::queue
-     * @todo Implement testQueue().
+     * @depends testGetConnection
+     * @covers Versionable\Ration\Client\Queue::setConnection
+     * @covers Versionable\Ration\Client\Queue::getConnection
      */
-    public function testQueue()
+    public function testSetConnection()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface');
+        
+        $this->object->setConnection($connection);
+        $this->assertEquals($connection, $this->object->getConnection());
     }
-
+    
     /**
      * @covers Versionable\Ration\Client\Queue::getQueue
-     * @todo Implement testGetQueue().
      */
     public function testGetQueue()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf('\\SplQueue', $this->object->getQueue());
     }
-
+    
     /**
+     * @depends testGetQueue
      * @covers Versionable\Ration\Client\Queue::reset
-     * @todo Implement testReset().
+     * @covers Versionable\Ration\Client\Queue::getQueue
      */
     public function testReset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf('\\SplQueue', $this->object->reset());
+    }
+    
+    /**
+     * @depends testGetQueue
+     * @covers Versionable\Ration\Client\Queue::queue
+     * @covers Versionable\Ration\Client\Queue::getQueue
+     */
+    public function testQueue()
+    {
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $queue = new \SplQueue();
+        $queue->push($request);
+        
+        $this->object->send($request);
+        
+        $this->assertEquals($queue, $this->object->getQueue());
     }
 
     /**
+     * @depends testGetQueue
+     * @covers Versionable\Ration\Client\Queue::send
+     * @covers Versionable\Ration\Client\Queue::getQueue
+     */
+    public function testSend()
+    {
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $queue = new \SplQueue();
+        $queue->push($request);
+        
+        $this->object->send($request);
+        
+        $this->assertEquals($queue, $this->object->getQueue());
+    }
+
+    /**
+     * @depends testSetConnection
+     * @depends testGetConnection
+     * @depends testQueue
+     * @depends testGetQueue
      * @covers Versionable\Ration\Client\Queue::flush
-     * @todo Implement testFlush().
+     * @covers Versionable\Ration\Client\Queue::setConnection
+     * @covers Versionable\Ration\Client\Queue::getConnection
+     * @covers Versionable\Ration\Client\Queue::getQueue
+     * @covers Versionable\Ration\Client\Queue::queue
      */
     public function testFlush()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $request = $this->getMock('Versionable\Ration\Request\Request');
+        $response = $this->getMock('Versionable\Ration\Response\Response');
+        $responseCollection = new \SplObjectStorage();
+        
+        $connection = $this->getMock('Versionable\Ration\Connection\ConnectionInterface', array(
+            'call',
+            'connect',
+            'disconnect',
+            'readLength',
+            'read',
+            'write',
+            'parseResponse'
+        ));
+        
+        $connection->expects($this->any())
+                   ->method('call')
+                   ->will($this->returnValue($response));
+        
+        $this->object->setConnection($connection);
+        $this->object->queue($request);
+        
+        $responseCollection->attach($request, $response);
+        
+        $this->assertEquals($responseCollection, $this->object->flush());
     }
-
 }
-
-?>
