@@ -62,6 +62,8 @@ class Cluster extends \SplObjectStorage implements ConnectionInterface
 
     public function disconnect()
     {
+        $this->_lastConnection = null;
+        
         $this->rewind();
         foreach ($this as $connection) {
             $this->detach($connection);
