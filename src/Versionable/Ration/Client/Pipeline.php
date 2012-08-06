@@ -4,8 +4,8 @@ namespace Versionable\Ration\Client;
 
 use Versionable\Ration\Connection\ConnectionInterface;
 use Versionable\Ration\Request\Request;
-use Versionable\Ration\Command\Multi;
-use Versionable\Ration\Command\Exec;
+use Versionable\Ration\Command\MultiCommand;
+use Versionable\Ration\Command\ExecCommand;
 use Versionable\Ration\Command\Exception\PipelineException;
 
 /**
@@ -56,11 +56,6 @@ class Pipeline implements ClientInterface
         return $this->stack;
     }
 
-    public function setStack($stack)
-    {
-        $this->stack = $stack;
-    }
-
     public function send(Request $request)
     {
         $this->getStack()->push($request);
@@ -71,7 +66,7 @@ class Pipeline implements ClientInterface
         $connection = $this->getConnection();
 
         // first add the multi command and queue each one
-        $request = new Request(new Multi());
+        $request = new Request(new MultiCommand());
         $connection->call($request);
 
         $stack = $this->getStack();
@@ -85,7 +80,7 @@ class Pipeline implements ClientInterface
             }
         }
 
-        $exec = new Request(new Exec());
+        $exec = new Request(new ExecCommand());
 
         return $connection->call($exec);
     }
