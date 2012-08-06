@@ -41,7 +41,7 @@ class RestoreCommandTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->object->getKey());
     }
-
+    
     /**
      * @depends testGetKey
      * @covers Versionable\Ration\Command\RestoreCommand::setKey
@@ -54,7 +54,7 @@ class RestoreCommandTest extends \PHPUnit_Framework_TestCase
         $this->object->setKey($key);
         $this->assertEquals($key, $this->object->getKey());
     }
-
+    
     /**
      * @covers Versionable\Ration\Command\RestoreCommand::getValue
      */
@@ -64,7 +64,7 @@ class RestoreCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @depends testGetvalue
+     * @depends testGetValue
      * @covers Versionable\Ration\Command\RestoreCommand::setValue
      * @covers Versionable\Ration\Command\RestoreCommand::getValue
      */
