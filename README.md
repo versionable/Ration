@@ -57,3 +57,9 @@ Set then get a key
     $request = new Request(new GetCommand('key'));
     $response = $client->send($response);
 ```
+
+TODO
+----
+
+* Complete documentation of current API
+* Implement remaining commands
