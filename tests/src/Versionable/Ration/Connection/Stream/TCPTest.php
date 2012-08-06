@@ -36,76 +36,68 @@ class TCPTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Versionable\Ration\Connection\Stream\TCP::getHost
-     * @todo Implement testGetHost().
      */
     public function testGetHost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals('localhost', $this->object->getHost());
     }
 
     /**
+     * @depends testGetHost
      * @covers Versionable\Ration\Connection\Stream\TCP::setHost
-     * @todo Implement testSetHost().
+     * @covers Versionable\Ration\Connection\Stream\TCP::getHost
      */
     public function testSetHost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $host = 'test';
+        
+        $this->object->setHost($host);
+        $this->assertEquals($host, $this->object->getHost());
     }
 
     /**
      * @covers Versionable\Ration\Connection\Stream\TCP::getPort
-     * @todo Implement testGetPort().
      */
     public function testGetPort()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEquals(6379, $this->object->getPort());
     }
 
     /**
+     * @depends testGetPort
      * @covers Versionable\Ration\Connection\Stream\TCP::setPort
-     * @todo Implement testSetPort().
+     * @covers Versionable\Ration\Connection\Stream\TCP::getPort
      */
     public function testSetPort()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $port = 1337;
+        
+        $this->object->setPort($port);
+        $this->assertEquals($port, $this->object->getPort());
+    }
+    
+    /**
+     * @covers Versionable\Ration\Connection\Stream\TCP::isValid
+     */
+    public function testIsValid()
+    {
+        $this->assertTrue($this->object->isValid());
     }
 
     /**
+     * @depends testGetHost
+     * @depends testGetPort
+     * @depends testIsValid
      * @covers Versionable\Ration\Connection\Stream\TCP::getAddress
+     * @covers Versionable\Ration\Connection\Stream\TCP::getHost
+     * @covers Versionable\Ration\Connection\Stream\TCP::getPort
+     * @covers Versionable\Ration\Connection\Stream\TCP::isValid
      * @todo Implement testGetAddress().
      */
     public function testGetAddress()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $address = 'tcp://localhost:6379';
+        
+        $this->assertEquals($address, $this->object->getAddress());
     }
-
-    /**
-     * @covers Versionable\Ration\Connection\Stream\TCP::isValid
-     * @todo Implement testIsValid().
-     */
-    public function testIsValid()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }
-
-?>
