@@ -18,6 +18,7 @@ class Connection implements ConnectionInterface
     public function __construct(StreamInterface $streamAddress = null)
     {
         $this->streamAddress = $streamAddress;
+        $this->handle = null;
     }
     
     /**Gets the current stream resource
@@ -58,7 +59,8 @@ class Connection implements ConnectionInterface
     public function connect()
     {
         if (null === $this->getHandle()) {
-            $this->handle = @fopen($this->getStreamAddress()->getAddress(), 'r+');
+            $address = $this->getStreamAddress()->getAddress();
+            $this->handle = @stream_socket_client($address);
             
             if (false === $this->getHandle()) {
                 throw new Exception\ConnectionException();
