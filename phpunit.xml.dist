@@ -14,6 +14,12 @@
         </testsuite>
     </testsuites>
 
+    <groups>
+        <exclude>
+            <group>tcp</group>
+        </exclude>
+    </groups>
+
     <logging>
         <log type="coverage-html" target="build/coverage" title="Ration"
          charset="UTF-8" yui="true" highlights="true"
