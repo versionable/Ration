@@ -3,7 +3,6 @@
 namespace Versionable\Ration\Connection;
 
 use Versionable\Ration\Connection\Connection;
-use Versionable\Ration\Stream\TestWrapper;
 use Versionable\Ration\Connection\Stream\TCP;
 
 /**
@@ -41,19 +40,11 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $streamAddress = $this->getMock('\Versionable\Ration\Connection\Stream\StreamInterface');
         $streamAddress->expects($this->any())
                       ->method('getAddress')
-                      ->will($this->returnValue(TestWrapper::SCHEME.'://test'));
+                      ->will($this->returnValue('tcp://127.0.0.1:6379'));
         
         return $streamAddress;
     }
     
-    /**
-     * Register the custom stream wrapper before the class is instantiated
-     */
-    public static function setUpBeforeClass()
-    {
-        stream_wrapper_register(TestWrapper::SCHEME, '\Versionable\Ration\Stream\TestWrapper');
-    }
-
     /**
      * @covers Versionable\Ration\Connection\Connection::getHandle
      */
@@ -84,6 +75,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @depends testSetStreamAddress
      * @depends testGetStreamAddress
      * @depends testGetHandle
@@ -99,6 +91,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testSetStreamAddress
      * @depends testGetStreamAddress
      * @depends testGetHandle
@@ -118,6 +111,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @depends testConnect
      * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::read
@@ -132,6 +126,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @depends testSetStreamAddress
      * @depends testGetStreamAddress
      * @depends testConnect
@@ -148,6 +143,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @depends testConnect
      * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::write
@@ -162,6 +158,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testConnect
      * @depends testGetHandle
      * @covers Versionable\Ration\Connection\Connection::write
@@ -174,6 +171,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @covers Versionable\Ration\Connection\Connection::getHandle
      * @covers Versionable\Ration\Connection\Connection::disconnect
      */
@@ -183,6 +181,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -193,6 +192,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -207,6 +207,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -217,6 +218,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -227,6 +229,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -242,6 +245,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testRead
      * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
@@ -256,8 +260,6 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @depends testRead
-     * @depends testReadLength
      * @covers Versionable\Ration\Connection\Connection::parseResponse
      * @expectedException Versionable\Ration\Response\Exception\ResponseException
      */
@@ -267,6 +269,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
+     * @group tcp
      * @depends testConnect
      * @depends testRead
      * @depends testWrite

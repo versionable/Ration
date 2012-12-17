@@ -58,10 +58,10 @@ class Connection implements ConnectionInterface
     public function connect()
     {
         if (null === $this->getHandle()) {
-            $this->handle = @fopen($this->getStreamAddress()->getAddress(), 'r+');
+            $this->handle = @stream_socket_client($this->getStreamAddress()->getAddress(), $errno, $errstr);
             
             if (false === $this->getHandle()) {
-                throw new Exception\ConnectionException();
+                throw new Exception\ConnectionException($errstr);
             }
         }
     }
